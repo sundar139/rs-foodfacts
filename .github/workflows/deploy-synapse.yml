@@ -1,0 +1,26 @@
+name: Deploy Synapse
+
+on:
+  push:
+    branches:
+      - synapse_publish # auto-triggered when Synapse publish branch updates
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Synapse ARM Template
+        run: |
+          az deployment group create \
+            --resource-group rs-rg-foodfacts \
+            --template-file ./synapse_publish/TemplateForWorkspace.json \
+            --parameters workspaceName=rsj-syn-foodfacts location=eastus2

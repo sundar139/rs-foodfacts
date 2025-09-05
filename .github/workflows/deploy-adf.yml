@@ -1,0 +1,26 @@
+name: Deploy ADF
+
+on:
+  push:
+    branches:
+      - adf_publish # auto-triggered when ADF publish branch updates
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy ADF ARM Template
+        run: |
+          az deployment group create \
+            --resource-group rs-rg-foodfacts \
+            --template-file ./adf_publish/ARMTemplateForFactory.json \
+            --parameters factoryName=rs-adf-foodfacts location=eastus2
