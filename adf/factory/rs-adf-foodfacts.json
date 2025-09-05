@@ -1,0 +1,9 @@
+{
+	"name": "rs-adf-foodfacts",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8d8d2d94-8cbd-4d5a-a819-f5a9cb8e025a",
+		"tenantId": "39d98482-cebc-449c-ab72-95ce320d4f6e"
+	}
+}
